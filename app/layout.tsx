@@ -28,7 +28,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${kanit.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-ro-sky text-slate-900">
+      <body className="min-h-full flex flex-col text-slate-900">
         {children}
       </body>
     </html>

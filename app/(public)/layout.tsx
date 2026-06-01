@@ -7,7 +7,7 @@ export default function PublicLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative min-h-screen flex flex-col overflow-x-hidden bg-ro-sky">
+    <div className="relative min-h-screen flex flex-col overflow-x-hidden">
       {/* Scroll-Linked Parallax Clouds */}
       <CloudBackground />
 
