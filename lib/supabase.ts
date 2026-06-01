@@ -1,0 +1,3 @@
+// Supabase client initialization to be configured with environment variables later.
+// export const supabase = ...
+export {};
