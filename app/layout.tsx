@@ -13,8 +13,10 @@ const kanit = Kanit({
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 
+import ThemeProvider from "@/components/ThemeProvider";
+
 export const metadata: Metadata = {
-  title: "RPG Portfolio | Adventurer's Journey",
+  title: "Sakditat Portfolio | Adventurer's Journey",
   description: "A bright & adventurous modern RPG developer portfolio inspired by classic fantasy aesthetics.",
 };
 
@@ -27,9 +29,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${kanit.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col text-slate-900">
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

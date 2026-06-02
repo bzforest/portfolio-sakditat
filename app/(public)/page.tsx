@@ -4,6 +4,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/shared/Navbar';
 import HeroStatus from '@/components/profile/HeroStatus';
+import ProjectMap from '@/components/projects/ProjectMap';
+import MessengerGuild from '@/components/contact/MessengerGuild';
 import { siteConfig } from '@/data/config';
 
 export default function PublicLandingPage() {
@@ -24,7 +26,7 @@ export default function PublicLandingPage() {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="text-center mb-8 space-y-1.5"
         >
-          <p className="font-heading font-extrabold text-4xl md:text-5xl text-ro-wood drop-shadow-sm">
+          <p className="font-heading font-extrabold text-3xl md:text-5xl text-ro-wood drop-shadow-sm dark:text-slate-200 md:py-10">
             <motion.span
               animate={{ rotateY: 360 }}
               transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
@@ -65,24 +67,11 @@ export default function PublicLandingPage() {
         </motion.div>
       </section>
 
-      {/* ── Placeholder sections for future phases ──────────────────────── */}
-      <section
-        id="projects"
-        className="min-h-screen flex items-center justify-center"
-      >
-        <p className="font-heading text-2xl font-bold text-ro-wood/30">
-          ⚔️ Quest Board — Coming in Phase 4
-        </p>
-      </section>
+      {/* ── Phase 4: Quest Board (Projects) ───────────────────────────── */}
+      <ProjectMap />
 
-      <section
-        id="contact"
-        className="min-h-[50vh] flex items-center justify-center"
-      >
-        <p className="font-heading text-2xl font-bold text-ro-wood/30">
-          📮 Messenger Guild — Coming in Phase 5
-        </p>
-      </section>
+      {/* ── Phase 5: Messenger Guild (Contact) ──────────────────────── */}
+      <MessengerGuild />
     </>
   );
 }

@@ -19,6 +19,7 @@ function CloudBlob({
 
   return (
     <div
+      className="dark:opacity-20 transition-opacity duration-500"
       style={{
         position: 'absolute',
         width,

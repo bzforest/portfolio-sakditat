@@ -1,6 +1,8 @@
 import React from "react";
 import CloudBackground from "@/components/map/CloudBackground";
 
+import Footer from "@/components/shared/Footer";
+
 export default function PublicLayout({
   children,
 }: {
@@ -17,6 +19,9 @@ export default function PublicLayout({
       </div>
 
       <main className="relative flex-1 w-full z-10">{children}</main>
+      
+      {/* ── Footer ─────────────────────────────────────────────────── */}
+      <Footer />
     </div>
   );
 }

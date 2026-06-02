@@ -49,6 +49,36 @@ export const siteConfig = {
     github: 'https://github.com/bzforest',
     linkedin: 'https://www.linkedin.com/in/sakditat-thoumsaeng/',
   },
+
+  // ── Projects / Quests ──────────────────────────────────────────────────────
+  projects: [
+    {
+      title: 'Minor Cineplex',
+      description: 'Cinema-themed web app with an interactive chatbot and mascot.',
+      tech: ['Next.js', 'Node.js', 'Express', 'TypeScript', 'Tailwind CSS'],
+      imagePlaceholder: '🍿 Minor Cineplex',
+      liveDemoUrl: '#',
+      githubFeUrl: '#',
+      githubBeUrl: '#',
+    },
+    {
+      title: 'TaskFlow',
+      description: 'Interactive Kanban-style dashboard with fluid drag-and-drop and dark mode.',
+      tech: ['React', 'Tailwind CSS', 'Recharts'],
+      imagePlaceholder: '📋 TaskFlow',
+      liveDemoUrl: '#',
+      githubFeUrl: '#',
+    },
+    {
+      title: 'Pet Sitter',
+      description: 'Comprehensive pet-sitting service with dynamic scheduling.',
+      tech: ['Vue.js', 'Spring Boot', 'WebSocket', 'Tailwind CSS'],
+      imagePlaceholder: '🐶 Pet Sitter',
+      liveDemoUrl: '#',
+      githubFeUrl: '#',
+      githubBeUrl: '#',
+    },
+  ],
 } as const;
 
 export type SiteConfig = typeof siteConfig;

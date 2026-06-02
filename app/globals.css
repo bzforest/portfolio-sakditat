@@ -17,12 +17,15 @@
 
 html { scroll-behavior: smooth; }
 
+/* ── Tell Tailwind v4 to use class-based dark mode (for next-themes) ─── */
+@custom-variant dark (&:where(.dark, .dark *));
+
 body {
   /* Soft, modern sky gradient — replaces harsh solid ro-sky */
-  background: linear-gradient(to bottom, #7ec8e3 0%, #b3dff0 30%, #d9eefa 65%, #edf6fd 100%);
+  @apply bg-gradient-to-b from-[#7ec8e3] via-[#b3dff0] to-[#edf6fd] dark:from-slate-950 dark:via-indigo-950 dark:to-slate-900;
   background-attachment: fixed;
 
-  color: #1e293b;
+  @apply text-slate-900 dark:text-slate-200;
   font-family: var(--font-sans);
   min-height: 100vh;
 }
