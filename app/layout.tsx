@@ -13,8 +13,11 @@ const kanit = Kanit({
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 
+import ThemeProvider from "@/components/ThemeProvider";
+import PoringChatbot from "@/components/mascot/PoringChatbot";
+
 export const metadata: Metadata = {
-  title: "RPG Portfolio | Adventurer's Journey",
+  title: "Sakditat Portfolio | Adventurer's Journey",
   description: "A bright & adventurous modern RPG developer portfolio inspired by classic fantasy aesthetics.",
 };
 
@@ -27,9 +30,14 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${kanit.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-ro-sky text-slate-900">
-        {children}
+      <body className="min-h-full flex flex-col text-slate-900">
+        <ThemeProvider>
+          {children}
+          {/* ── Poring Chatbot Mascot ──────────────────────────────────── */}
+          <PoringChatbot />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,29 +1,46 @@
 @import "tailwindcss";
 
-:root {
-  --foreground: #1e293b;
-}
-
 @theme {
-  /* Adventurous RPG Theme Colors */
-  --color-ro-sky: #48b6ef;
-  --color-ro-wood: #855b32;
-  --color-ro-leaf: #48c774;
+  /* ── Adventurous RPG palette ─────────────────────────── */
+  --color-ro-sky:   #48b6ef;
+  --color-ro-wood:  #855b32;
+  --color-ro-leaf:  #48c774;
   --color-ro-cloud: #f4f6f9;
 
-  /* Typography Mapping */
-  --font-sans: var(--font-inter), sans-serif;
-  --font-heading: var(--font-kanit), sans-serif;
+  /* ── Typography ──────────────────────────────────────── */
+  --font-sans:    var(--font-inter),  sans-serif;
+  --font-heading: var(--font-kanit),  sans-serif;
+
+  /* ── Animations ──────────────────────────────────────── */
+  --animate-poring-bounce: poring 1.5s infinite ease-in-out;
+
+  @keyframes poring {
+    0%, 100% { transform: translateY(-25%) scale(0.95, 1.05); }
+    40% { transform: translateY(0) scale(1, 1); }
+    50% { transform: translateY(5%) scale(1.2, 0.8); }
+    60% { transform: translateY(0) scale(1, 1); }
+  }
 }
 
+/* ── Global reset & body ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+/* ── Tell Tailwind v4 to use class-based dark mode (for next-themes) ─── */
+@custom-variant dark (&:where(.dark, .dark *));
+
 body {
-  background-color: var(--color-ro-sky);
-  color: var(--foreground);
+  /* Soft, modern sky gradient — replaces harsh solid ro-sky */
+  @apply bg-gradient-to-b from-[#7ec8e3] via-[#b3dff0] to-[#edf6fd] dark:from-slate-950 dark:via-indigo-950 dark:to-slate-900;
+  background-attachment: fixed;
+
+  @apply text-slate-900 dark:text-slate-200;
   font-family: var(--font-sans);
   min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
 }

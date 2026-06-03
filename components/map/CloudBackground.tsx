@@ -1,92 +1,131 @@
 'use client';
 
-import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import InteractiveParticles from './InteractiveParticles';
 
-export default function CloudBackground() {
-  const { scrollY } = useScroll();
+// ─── Helpers ─────────────────────────────────────────────────────────────────
 
-  // Parallax multipliers and drift directions for multiple fluffy clouds.
-  // Higher vertical factors mean they move down faster relative to scrolling, creating depth.
-  const cloud1Y = useTransform(scrollY, [0, 3000], [0, 600]);
-  const cloud1X = useTransform(scrollY, [0, 3000], [0, 200]);
-
-  const cloud2Y = useTransform(scrollY, [0, 3000], [0, 1000]);
-  const cloud2X = useTransform(scrollY, [0, 3000], [0, -150]);
-
-  const cloud3Y = useTransform(scrollY, [0, 3000], [0, 450]);
-  const cloud3X = useTransform(scrollY, [0, 3000], [0, -300]);
-
-  const cloud4Y = useTransform(scrollY, [0, 3000], [0, 1400]);
-  const cloud4X = useTransform(scrollY, [0, 3000], [0, 300]);
+/** A single realistic cloud made of multiple blurred radial-gradient blobs */
+function CloudBlob({
+  width,
+  style,
+  opacity = 0.88,
+}: {
+  width: number;
+  style?: React.CSSProperties;
+  opacity?: number;
+}) {
+  const h = Math.round(width * 0.42);
 
   return (
-    <div className="absolute inset-y-0 left-0 right-0 pointer-events-none overflow-hidden z-0 select-none min-h-full">
-      {/* Cloud 1 - Small Fluffy */}
-      <motion.div
-        className="absolute w-48 h-16 opacity-70"
-        style={{
-          top: '8%',
-          left: '12%',
-          y: cloud1Y,
-          x: cloud1X,
-        }}
-      >
-        <div className="relative w-full h-full bg-ro-cloud rounded-full shadow-md">
-          <div className="absolute w-24 h-24 bg-ro-cloud rounded-full -top-10 left-6" />
-          <div className="absolute w-20 h-20 bg-ro-cloud rounded-full -top-6 left-20" />
-        </div>
-      </motion.div>
+    <div
+      className="dark:opacity-20 transition-opacity duration-500"
+      style={{
+        position: 'absolute',
+        width,
+        height: h,
+        opacity,
+        ...style,
+      }}
+    >
+      {/* Base layer — wide, soft ellipse */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        borderRadius: '50%',
+        background: 'radial-gradient(ellipse 100% 60% at 50% 70%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.0) 100%)',
+        filter: 'blur(6px)',
+      }} />
+      {/* Left puff */}
+      <div style={{
+        position: 'absolute',
+        width: '52%', height: '130%',
+        top: '-40%', left: '8%',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(255,255,255,0.96) 30%, rgba(255,255,255,0) 80%)',
+        filter: 'blur(5px)',
+      }} />
+      {/* Center puff (tallest) */}
+      <div style={{
+        position: 'absolute',
+        width: '50%', height: '160%',
+        top: '-65%', left: '28%',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(255,255,255,0.98) 20%, rgba(255,255,255,0) 75%)',
+        filter: 'blur(4px)',
+      }} />
+      {/* Right puff */}
+      <div style={{
+        position: 'absolute',
+        width: '44%', height: '120%',
+        top: '-30%', right: '5%',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(255,255,255,0.93) 25%, rgba(255,255,255,0) 75%)',
+        filter: 'blur(6px)',
+      }} />
+      {/* Soft shadow at bottom */}
+      <div style={{
+        position: 'absolute',
+        width: '80%', height: '30%',
+        bottom: '-8%', left: '10%',
+        borderRadius: '50%',
+        background: 'radial-gradient(ellipse at center, rgba(180,210,240,0.35) 0%, transparent 70%)',
+        filter: 'blur(8px)',
+      }} />
+    </div>
+  );
+}
 
-      {/* Cloud 2 - Medium-Large Fluffy */}
-      <motion.div
-        className="absolute w-72 h-20 opacity-80"
-        style={{
-          top: '22%',
-          right: '10%',
-          y: cloud2Y,
-          x: cloud2X,
-        }}
-      >
-        <div className="relative w-full h-full bg-ro-cloud rounded-full shadow-lg">
-          <div className="absolute w-36 h-36 bg-ro-cloud rounded-full -top-16 left-12" />
-          <div className="absolute w-28 h-28 bg-ro-cloud rounded-full -top-10 left-36" />
-          <div className="absolute w-24 h-24 bg-ro-cloud rounded-full -top-6 left-4" />
-        </div>
-      </motion.div>
+// ─── Main component ───────────────────────────────────────────────────────────
+export default function CloudBackground() {
+  const [clouds, setClouds] = useState<any[]>([]);
+  const [mounted, setMounted] = useState(false);
 
-      {/* Cloud 3 - Medium Soft */}
-      <motion.div
-        className="absolute w-60 h-16 opacity-65"
-        style={{
-          top: '48%',
-          left: '6%',
-          y: cloud3Y,
-          x: cloud3X,
-        }}
-      >
-        <div className="relative w-full h-full bg-ro-cloud rounded-full shadow-sm">
-          <div className="absolute w-24 h-24 bg-ro-cloud rounded-full -top-8 left-10" />
-          <div className="absolute w-20 h-20 bg-ro-cloud rounded-full -top-6 left-28" />
-        </div>
-      </motion.div>
+  useEffect(() => {
+    setMounted(true);
+    // Generate 15 clouds for a balanced density
+    const generatedClouds = Array.from({ length: 15 }).map((_, i) => ({
+      id: i,
+      x: Math.random() * 100, // 0-100% width
+      y: Math.random() * 100, // 0-100% document height
+      scale: Math.random() * 0.8 + 0.4, // Random sizes
+      duration: Math.random() * 20 + 20, // 20s to 40s float loop
+      delay: Math.random() * 5,
+      opacity: Math.random() * 0.3 + 0.5, // 0.5 to 0.8
+    }));
+    setClouds(generatedClouds);
+  }, []);
 
-      {/* Cloud 4 - Giant Foreground Cloud */}
-      <motion.div
-        className="absolute w-96 h-24 opacity-75"
-        style={{
-          top: '72%',
-          right: '12%',
-          y: cloud4Y,
-          x: cloud4X,
-        }}
-      >
-        <div className="relative w-full h-full bg-ro-cloud rounded-full shadow-xl">
-          <div className="absolute w-48 h-48 bg-ro-cloud rounded-full -top-24 left-16" />
-          <div className="absolute w-36 h-36 bg-ro-cloud rounded-full -top-14 left-48" />
-          <div className="absolute w-32 h-32 bg-ro-cloud rounded-full -top-10 left-4" />
-        </div>
-      </motion.div>
+  if (!mounted) return null;
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 select-none">
+      <InteractiveParticles />
+
+      {clouds.map((cloud) => (
+        <motion.div
+          key={cloud.id}
+          className="absolute"
+          style={{
+            left: `${cloud.x}%`,
+            top: `${cloud.y}%`,
+            scale: cloud.scale,
+          }}
+          animate={{
+            x: ['-2vw', '2vw', '-2vw'], // Gentle horizontal float
+            y: ['-1vh', '1vh', '-1vh'], // Gentle vertical float
+          }}
+          transition={{
+            duration: cloud.duration,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: cloud.delay,
+          }}
+        >
+          <CloudBlob width={300} opacity={cloud.opacity} />
+        </motion.div>
+      ))}
     </div>
   );
 }

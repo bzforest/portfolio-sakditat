@@ -9,12 +9,17 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@rive-app/react-canvas": "^4.28.6",
-    "@supabase/supabase-js": "^2.106.2",
+    "@supabase/supabase-js": "^2.107.0",
     "framer-motion": "^12.40.0",
+    "fuse.js": "^7.4.1",
+    "lucide-react": "^1.17.0",
     "next": "16.2.7",
+    "next-themes": "^0.4.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "react-markdown": "^10.1.0",
     "zustand": "^5.0.14"
   },
   "devDependencies": {
