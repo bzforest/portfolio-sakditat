@@ -14,6 +14,7 @@ const kanit = Kanit({
 });
 
 import ThemeProvider from "@/components/ThemeProvider";
+import PoringChatbot from "@/components/mascot/PoringChatbot";
 
 export const metadata: Metadata = {
   title: "Sakditat Portfolio | Adventurer's Journey",
@@ -34,6 +35,8 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col text-slate-900">
         <ThemeProvider>
           {children}
+          {/* ── Poring Chatbot Mascot ──────────────────────────────────── */}
+          <PoringChatbot />
         </ThemeProvider>
       </body>
     </html>

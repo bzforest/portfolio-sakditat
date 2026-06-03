@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, Code2, Briefcase, Copy, Check } from 'lucide-react';
 import { siteConfig } from '@/data/config';
+import MagicParticles from '@/components/shared/MagicParticles';
 
 export default function MessengerGuild() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -87,11 +88,12 @@ export default function MessengerGuild() {
                 rel="noreferrer"
                 className="relative group cursor-pointer block w-full"
               >
-                <div className="absolute -top-7 left-1/2 -translate-x-1/2 px-4 py-1.5 pb-2rounded-t-lg text-amber-50 text-xs font-semibold font-heading whitespace-nowrap opacity-0 translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 -z-10 flex items-center gap-2">
+                <div className="absolute -top-7 left-1/2 -translate-x-1/2 px-4 py-1.5 pb-2rounded-t-lg text-ro-wood dark:text-amber-50 text-xs font-semibold font-heading whitespace-nowrap opacity-0 translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 -z-10 flex items-center gap-2">
                   <span>Click to Open</span>
                 </div>
 
-                <div className="relative z-10 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-ro-wood/40 rounded-xl p-6 flex flex-col items-start text-left transition-all hover:shadow-md dark:hover:bg-slate-700/60 w-full h-full">
+                <div className="relative z-10 overflow-hidden bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-ro-wood/40 rounded-xl p-6 flex flex-col items-start text-left transition-all hover:shadow-md dark:hover:bg-slate-700/60 w-full h-full">
+                  <MagicParticles isSubtle />
                   <button
                     onClick={(e) => {
                       e.preventDefault();
@@ -107,11 +109,11 @@ export default function MessengerGuild() {
                       <Copy className="w-4 h-4 text-slate-400 group-hover:text-slate-500 dark:group-hover:text-slate-200 transition-colors cursor-pointer" />
                     )}
                   </button>
-                  <Icon size={24} className="text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition-transform" />
-                  <span className="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider uppercase mb-1">
+                  <Icon size={24} className="relative z-10 text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition-transform" />
+                  <span className="relative z-10 text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider uppercase mb-1">
                     {card.label}
                   </span>
-                  <span className="text-sm md:text-base font-medium text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-white transition-colors truncate w-full">
+                  <span className="relative z-10 text-sm md:text-base font-medium text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-white transition-colors truncate w-full">
                     {card.value}
                   </span>
                 </div>

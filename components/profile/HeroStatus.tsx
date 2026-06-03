@@ -75,7 +75,7 @@ function SpinningAvatar() {
       />
       {/* Layer 2 — Inner mask */}
       <div className="relative w-[calc(100%-12px)] h-[calc(100%-12px)] rounded-full bg-sky-100 dark:bg-slate-900 z-10 flex items-center justify-center overflow-hidden transition-colors duration-500">
-        <span className="text-8xl select-none leading-none">🧙</span>
+        <img src="/image/profile/profile-01.jpg" alt="me" className="w-full h-full object-cover scale-[1.25]" />
       </div>
     </div>
   );

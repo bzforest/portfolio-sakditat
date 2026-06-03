@@ -33,7 +33,7 @@ export default function ThemeToggle() {
         relative w-[68px] h-[32px] rounded-full shrink-0
         flex items-center
         transition-colors duration-500
-        border-2 overflow-hidden
+        border-2 overflow-hidden cursor-pointer
         ${isDark
           ? 'bg-slate-800 border-indigo-500/50'
           : 'bg-sky-300 border-amber-400/60'}

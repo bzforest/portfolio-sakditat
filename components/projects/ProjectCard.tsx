@@ -1,16 +1,20 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { Code2, ExternalLink } from 'lucide-react';
+import MagicParticles from '@/components/shared/MagicParticles';
 
 export interface ProjectData {
   title: string;
   description: string;
   tech: readonly string[];
   imagePlaceholder: string;
-  liveDemoUrl?: string;
-  githubFeUrl?: string;
-  githubBeUrl?: string;
+  imageUrl?: string | null;
+  liveDemoUrl?: string | null;
+  githubFeUrl?: string | null;
+  githubBeUrl?: string | null;
+  slug?: string;
 }
 
 interface ProjectCardProps {
@@ -21,22 +25,33 @@ interface ProjectCardProps {
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   return (
     <div
-      className="relative w-full max-w-2xl mx-auto flex flex-col gap-6 items-center p-6 md:p-8 rounded-3xl border-4 border-ro-wood/60 dark:border-ro-wood/50 bg-white/40 dark:bg-slate-900/60 backdrop-blur-xl shadow-xl shadow-ro-wood/10 dark:shadow-black/40 transition-colors duration-500"
+      className="group/card relative w-full max-w-2xl mx-auto flex flex-col gap-6 items-center p-6 md:p-8 rounded-3xl border-4 border-ro-wood/60 dark:border-ro-wood/50 bg-white/40 dark:bg-slate-900/60 backdrop-blur-xl shadow-xl shadow-ro-wood/10 dark:shadow-black/40 transition-colors duration-500"
     >
-      {/* ── Image Placeholder ─────────────────────────────────────── */}
-      <div className="w-full shrink-0 aspect-[4/3] rounded-2xl overflow-hidden border-2 border-ro-wood/40 dark:border-ro-wood/30 bg-sky-100/50 dark:bg-slate-800/80 flex items-center justify-center relative group">
+      <MagicParticles hoverClass="group-hover/card:opacity-100" />
+      {/* ── Image/Placeholder ─────────────────────────────────────── */}
+      <Link href={`/projects/${project.slug}`} className="w-full shrink-0 aspect-[4/3] rounded-2xl overflow-hidden border-2 border-ro-wood/40 dark:border-ro-wood/30 bg-sky-100/50 dark:bg-slate-800/80 flex items-center justify-center relative group cursor-pointer block">
         <div className="absolute inset-0 bg-gradient-to-tr from-amber-200/20 to-transparent dark:from-indigo-500/10" />
-        <span className="text-xl md:text-2xl font-bold text-ro-wood/60 dark:text-slate-400 font-heading z-10 group-hover:scale-110 transition-transform duration-300">
-          {project.imagePlaceholder}
-        </span>
-      </div>
+        {project.imageUrl ? (
+          <img 
+            src={project.imageUrl} 
+            alt={project.title} 
+            className="w-full h-full object-cover z-10 group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <span className="text-xl md:text-2xl font-bold text-ro-wood/60 dark:text-slate-400 font-heading z-10 group-hover:scale-110 transition-transform duration-300">
+            {project.imagePlaceholder}
+          </span>
+        )}
+      </Link>
 
       {/* ── Content ─────────────────────────────────────────────── */}
       <div className="w-full space-y-4 md:space-y-6 flex flex-col justify-center">
         <div className="space-y-2">
-          <h3 className="font-heading font-bold text-3xl md:text-4xl text-ro-wood dark:text-white">
-            {project.title}
-          </h3>
+          <Link href={`/projects/${project.slug}`} className="hover:text-amber-600 dark:hover:text-amber-400 transition-colors inline-block">
+            <h3 className="font-heading font-bold text-3xl md:text-4xl text-ro-wood dark:text-white hover:text-amber-600 dark:hover:text-amber-400 transition-colors">
+              {project.title}
+            </h3>
+          </Link>
           <p className="text-slate-700 dark:text-slate-300 text-base md:text-lg leading-relaxed">
             {project.description}
           </p>
@@ -62,6 +77,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               target="_blank" rel="noreferrer"
               className="relative overflow-hidden rounded-full p-[2px] group cursor-pointer transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]"
             >
+              <MagicParticles isSubtle />
               {/* Spinning Light */}
               <div className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,transparent_70%,#facc15_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
               {/* Inner Mask */}
@@ -75,20 +91,22 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             <a
               href={project.githubFeUrl}
               target="_blank" rel="noreferrer"
-              className="bg-slate-800/80 dark:bg-slate-700/80 hover:bg-slate-700 text-white border border-slate-600 rounded-full px-4 py-2 text-sm font-semibold flex items-center gap-2 transition-colors shadow-sm"
+              className="relative overflow-hidden group bg-slate-800/80 dark:bg-slate-700/80 hover:bg-slate-700 text-white border border-slate-600 rounded-full px-4 py-2 text-sm font-semibold flex items-center gap-2 transition-colors shadow-sm"
             >
-              <Code2 size={16} />
-              Frontend
+              <MagicParticles isSubtle />
+              <Code2 size={16} className="relative z-10" />
+              <span className="relative z-10">Frontend</span>
             </a>
           )}
           {project.githubBeUrl && (
             <a
               href={project.githubBeUrl}
               target="_blank" rel="noreferrer"
-              className="bg-slate-800/80 dark:bg-slate-700/80 hover:bg-slate-700 text-white border border-slate-600 rounded-full px-4 py-2 text-sm font-semibold flex items-center gap-2 transition-colors shadow-sm"
+              className="relative overflow-hidden group bg-slate-800/80 dark:bg-slate-700/80 hover:bg-slate-700 text-white border border-slate-600 rounded-full px-4 py-2 text-sm font-semibold flex items-center gap-2 transition-colors shadow-sm"
             >
-              <Code2 size={16} />
-              Backend
+              <MagicParticles isSubtle />
+              <Code2 size={16} className="relative z-10" />
+              <span className="relative z-10">Backend</span>
             </a>
           )}
         </div>

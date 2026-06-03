@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import InteractiveParticles from './InteractiveParticles';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -78,52 +79,53 @@ function CloudBlob({
 
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function CloudBackground() {
-  const { scrollY } = useScroll();
+  const [clouds, setClouds] = useState<any[]>([]);
+  const [mounted, setMounted] = useState(false);
 
-  /* Each cloud layer has its own parallax speed — faster = closer "foreground" */
-  const y1 = useTransform(scrollY, [0, 3000], [0,  400]);
-  const x1 = useTransform(scrollY, [0, 3000], [0,  120]);
+  useEffect(() => {
+    setMounted(true);
+    // Generate 15 clouds for a balanced density
+    const generatedClouds = Array.from({ length: 15 }).map((_, i) => ({
+      id: i,
+      x: Math.random() * 100, // 0-100% width
+      y: Math.random() * 100, // 0-100% document height
+      scale: Math.random() * 0.8 + 0.4, // Random sizes
+      duration: Math.random() * 20 + 20, // 20s to 40s float loop
+      delay: Math.random() * 5,
+      opacity: Math.random() * 0.3 + 0.5, // 0.5 to 0.8
+    }));
+    setClouds(generatedClouds);
+  }, []);
 
-  const y2 = useTransform(scrollY, [0, 3000], [0,  700]);
-  const x2 = useTransform(scrollY, [0, 3000], [0, -180]);
-
-  const y3 = useTransform(scrollY, [0, 3000], [0,  300]);
-  const x3 = useTransform(scrollY, [0, 3000], [0, -240]);
-
-  const y4 = useTransform(scrollY, [0, 3000], [0, 1000]);
-  const x4 = useTransform(scrollY, [0, 3000], [0,  260]);
-
-  const y5 = useTransform(scrollY, [0, 3000], [0,  550]);
-  const x5 = useTransform(scrollY, [0, 3000], [0, -80]);
+  if (!mounted) return null;
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 select-none">
+      <InteractiveParticles />
 
-      {/* Cloud 1 — small, high, fast (far background) */}
-      <motion.div style={{ position: 'absolute', top: '6%', left: '8%', y: y1, x: x1 }}>
-        <CloudBlob width={220} opacity={0.70} />
-      </motion.div>
-
-      {/* Cloud 2 — large, right side */}
-      <motion.div style={{ position: 'absolute', top: '16%', right: '7%', y: y2, x: x2 }}>
-        <CloudBlob width={380} opacity={0.82} />
-      </motion.div>
-
-      {/* Cloud 3 — medium, left mid */}
-      <motion.div style={{ position: 'absolute', top: '38%', left: '4%', y: y3, x: x3 }}>
-        <CloudBlob width={280} opacity={0.65} />
-      </motion.div>
-
-      {/* Cloud 4 — very large, lower foreground */}
-      <motion.div style={{ position: 'absolute', top: '60%', right: '5%', y: y4, x: x4 }}>
-        <CloudBlob width={480} opacity={0.78} />
-      </motion.div>
-
-      {/* Cloud 5 — small accent, center-top */}
-      <motion.div style={{ position: 'absolute', top: '3%', left: '40%', y: y5, x: x5 }}>
-        <CloudBlob width={180} opacity={0.60} />
-      </motion.div>
-
+      {clouds.map((cloud) => (
+        <motion.div
+          key={cloud.id}
+          className="absolute"
+          style={{
+            left: `${cloud.x}%`,
+            top: `${cloud.y}%`,
+            scale: cloud.scale,
+          }}
+          animate={{
+            x: ['-2vw', '2vw', '-2vw'], // Gentle horizontal float
+            y: ['-1vh', '1vh', '-1vh'], // Gentle vertical float
+          }}
+          transition={{
+            duration: cloud.duration,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: cloud.delay,
+          }}
+        >
+          <CloudBlob width={300} opacity={cloud.opacity} />
+        </motion.div>
+      ))}
     </div>
   );
 }

@@ -10,6 +10,16 @@
   /* ── Typography ──────────────────────────────────────── */
   --font-sans:    var(--font-inter),  sans-serif;
   --font-heading: var(--font-kanit),  sans-serif;
+
+  /* ── Animations ──────────────────────────────────────── */
+  --animate-poring-bounce: poring 1.5s infinite ease-in-out;
+
+  @keyframes poring {
+    0%, 100% { transform: translateY(-25%) scale(0.95, 1.05); }
+    40% { transform: translateY(0) scale(1, 1); }
+    50% { transform: translateY(5%) scale(1.2, 0.8); }
+    60% { transform: translateY(0) scale(1, 1); }
+  }
 }
 
 /* ── Global reset & body ─────────────────────────────────── */

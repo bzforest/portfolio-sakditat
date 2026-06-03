@@ -6,7 +6,7 @@ export const siteConfig = {
   name: 'Best',
   fullName: 'Sakditat Thoumsaeng',
   role: 'Junior Full-Stack Developer',
-  bio: 'A creative developer who loves turning complex problems into elegant, user-friendly experiences. Passionate about modern web technologies, interactive UIs, and building products that make a real difference.',
+  bio: 'A former Video Editor turned Full-Stack Developer. After over 3 years of telling stories through timelines and visuals, I discovered a deep passion for programming and logical problem-solving. Today, I blend my creative background with modern tech stacks to build seamless, user-friendly web applications, always eager to embrace new challenges in the tech industry.',
 
   // RPG character flavour
   class: 'Code Adventurer',
@@ -49,36 +49,6 @@ export const siteConfig = {
     github: 'https://github.com/bzforest',
     linkedin: 'https://www.linkedin.com/in/sakditat-thoumsaeng/',
   },
-
-  // ── Projects / Quests ──────────────────────────────────────────────────────
-  projects: [
-    {
-      title: 'Minor Cineplex',
-      description: 'Cinema-themed web app with an interactive chatbot and mascot.',
-      tech: ['Next.js', 'Node.js', 'Express', 'TypeScript', 'Tailwind CSS'],
-      imagePlaceholder: '🍿 Minor Cineplex',
-      liveDemoUrl: '#',
-      githubFeUrl: '#',
-      githubBeUrl: '#',
-    },
-    {
-      title: 'TaskFlow',
-      description: 'Interactive Kanban-style dashboard with fluid drag-and-drop and dark mode.',
-      tech: ['React', 'Tailwind CSS', 'Recharts'],
-      imagePlaceholder: '📋 TaskFlow',
-      liveDemoUrl: '#',
-      githubFeUrl: '#',
-    },
-    {
-      title: 'Pet Sitter',
-      description: 'Comprehensive pet-sitting service with dynamic scheduling.',
-      tech: ['Vue.js', 'Spring Boot', 'WebSocket', 'Tailwind CSS'],
-      imagePlaceholder: '🐶 Pet Sitter',
-      liveDemoUrl: '#',
-      githubFeUrl: '#',
-      githubBeUrl: '#',
-    },
-  ],
 } as const;
 
 export type SiteConfig = typeof siteConfig;

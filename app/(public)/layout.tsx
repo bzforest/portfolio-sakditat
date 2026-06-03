@@ -13,15 +13,11 @@ export default function PublicLayout({
       {/* Scroll-Linked Parallax Clouds */}
       <CloudBackground />
 
-      {/* Mascot Placeholder: Will be replaced with the Rive Poring component later */}
-      <div className="fixed bottom-4 right-4 z-50 p-4 bg-rose-600 text-white rounded-xl shadow-xl text-sm font-bold border border-rose-400">
-        🔮 Poring Mascot UI
-      </div>
-
-      <main className="relative flex-1 w-full z-10">{children}</main>
+      <main className="relative flex-1 w-full">{children}</main>
       
       {/* ── Footer ─────────────────────────────────────────────────── */}
       <Footer />
+
     </div>
   );
 }
