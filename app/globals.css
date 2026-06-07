@@ -2,30 +2,49 @@
 
 @theme {
   /* ── Adventurous RPG palette ─────────────────────────── */
-  --color-ro-sky:   #48b6ef;
-  --color-ro-wood:  #855b32;
-  --color-ro-leaf:  #48c774;
+  --color-ro-sky: #48b6ef;
+  --color-ro-wood: #855b32;
+  --color-ro-leaf: #48c774;
   --color-ro-cloud: #f4f6f9;
 
   /* ── Typography ──────────────────────────────────────── */
-  --font-sans:    var(--font-inter),  sans-serif;
-  --font-heading: var(--font-kanit),  sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
+  --font-heading: var(--font-kanit), sans-serif;
 
   /* ── Animations ──────────────────────────────────────── */
   --animate-poring-bounce: poring 1.5s infinite ease-in-out;
 
   @keyframes poring {
-    0%, 100% { transform: translateY(-25%) scale(0.95, 1.05); }
-    40% { transform: translateY(0) scale(1, 1); }
-    50% { transform: translateY(5%) scale(1.2, 0.8); }
-    60% { transform: translateY(0) scale(1, 1); }
+
+    0%,
+    100% {
+      transform: translateY(-25%) scale(0.95, 1.05);
+    }
+
+    40% {
+      transform: translateY(0) scale(1, 1);
+    }
+
+    50% {
+      transform: translateY(5%) scale(1.2, 0.8);
+    }
+
+    60% {
+      transform: translateY(0) scale(1, 1);
+    }
   }
 }
 
 /* ── Global reset & body ─────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 /* ── Tell Tailwind v4 to use class-based dark mode (for next-themes) ─── */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -40,7 +59,26 @@ body {
   min-height: 100vh;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   letter-spacing: -0.02em;
+}
+
+
+/* Hide scrollbar for Chrome, Safari and Opera for ALL elements */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox for ALL elements */
+* {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }

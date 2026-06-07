@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Send } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 
 type Message = { id: number; role: 'bot' | 'user'; text: string; };
@@ -31,6 +32,38 @@ export default function PoringChatbot() {
 
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+
+  // Auto-show tooltip loop
+  useEffect(() => {
+    if (isOpen) {
+      setShowHint(false);
+      return;
+    }
+
+    let hideTimer: NodeJS.Timeout;
+
+    const runCycle = () => {
+      setShowHint(true);
+      hideTimer = setTimeout(() => {
+        setShowHint(false);
+      }, 5000);
+    };
+
+    const initialTimer = setTimeout(() => {
+      runCycle();
+    }, 3000);
+
+    const interval = setInterval(() => {
+      runCycle();
+    }, 15000);
+
+    return () => {
+      clearTimeout(initialTimer);
+      clearTimeout(hideTimer);
+      clearInterval(interval);
+    };
+  }, [isOpen]);
 
   const chatRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -114,9 +147,17 @@ export default function PoringChatbot() {
 
   return (
     <div ref={chatRef} className="fixed bottom-4 right-4 z-50 md:bottom-8 md:right-8">
-      {isOpen && (
-        <div className="absolute bottom-28 md:bottom-40 right-0 w-80 sm:w-96 h-[28rem] bg-amber-50/95 dark:bg-slate-900/50 backdrop-blur-md border-2 border-ro-wood shadow-[0_0_20px_rgba(0,0,0,0.5)] rounded-2xl flex flex-col overflow-hidden origin-bottom-right animate-in zoom-in-95 duration-200">
-          <div className="flex items-center justify-between p-4 bg-gradient-to-r from-amber-900 via-ro-wood to-amber-950 border-b-2 border-amber-950/50 shadow-md z-10">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.5, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 50, transition: { duration: 0.2 } }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            style={{ transformOrigin: "bottom right" }}
+            className="absolute bottom-28 md:bottom-40 right-0 w-80 sm:w-96 h-[28rem] bg-amber-50/95 dark:bg-slate-900/50 backdrop-blur-md border-2 border-ro-wood shadow-[0_0_20px_rgba(0,0,0,0.5)] rounded-2xl flex flex-col overflow-hidden"
+          >
+            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-amber-900 via-ro-wood to-amber-950 border-b-2 border-amber-950/50 shadow-md z-10">
             <h3 className="font-heading font-semibold text-amber-50 tracking-wide">✦ Poring Assistant</h3>
             <button onClick={() => setIsOpen(false)} className="text-amber-200 hover:text-amber-50 transition-colors p-1 rounded-md">
               <X className="w-5 h-5 cursor-pointer" />
@@ -210,21 +251,45 @@ export default function PoringChatbot() {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
+    </AnimatePresence>
 
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="relative group hover:brightness-110 transition-all active:scale-95 cursor-pointer block"
-      >
-        <div className="animate-poring-bounce origin-bottom">
-          <img
-            src="/image/chatbot/mock-poring.png"
-            alt="Poring Assistant"
-            className="w-20 h-20 md:w-32 md:h-32 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)]"
-          />
-        </div>
-      </button>
+      <div className="relative">
+        <AnimatePresence>
+          {showHint && !isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.8 }}
+              transition={{ type: 'spring', damping: 15, stiffness: 300 }}
+              className="absolute bottom-full right-0 md:right-auto md:left-1/2 md:-translate-x-1/2 mb-4 w-max bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-xl rounded-2xl px-4 py-2 pointer-events-none z-50 flex flex-col items-center justify-center"
+            >
+              <p className="text-sm font-heading font-semibold text-slate-800 dark:text-slate-200 text-center leading-snug">
+                สอบถามเพิ่มเติม <br />
+                <span className="text-xs text-ro-sky font-bold">Click me!</span>
+              </p>
+              
+              {/* CSS Triangle pointing down */}
+              <div className="absolute top-full right-8 md:right-auto md:left-1/2 md:-translate-x-1/2 -mt-[1px] border-[8px] border-transparent border-t-white dark:border-t-slate-800 z-10" />
+              <div className="absolute top-full right-[31px] md:right-auto md:left-1/2 md:-translate-x-1/2 border-[9px] border-transparent border-t-slate-200 dark:border-t-slate-700 z-0" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="relative group hover:brightness-110 transition-all active:scale-95 cursor-pointer block"
+        >
+          <div className="animate-poring-bounce origin-bottom">
+            <img
+              src="/image/chatbot/mock-poring.png"
+              alt="Poring Assistant"
+              className="w-20 h-20 md:w-32 md:h-32 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)]"
+            />
+          </div>
+        </button>
+      </div>
     </div>
   );
 }

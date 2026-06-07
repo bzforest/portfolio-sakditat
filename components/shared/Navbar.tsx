@@ -12,7 +12,7 @@ import MagicParticles from '@/components/shared/MagicParticles';
 const navLinks = [
   { label: 'Home', href: '#hero' },
   { label: 'Status', href: '#status' },
-  { label: `Adventurer's Quests`, href: '#projects' },
+  { label: `Adventurer's Quests (Projects)`, href: '#projects' },
   { label: 'Contact', href: '#contact' },
 ];
 
