@@ -38,23 +38,6 @@ export default function HeroSection() {
 
       {/* Character status card — sits above CloudBackground (z-10 via layout) */}
       <HeroStatus />
-
-      {/* Scroll hint */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.7 }}
-        className="mt-10 flex flex-col items-center gap-1 text-ro-wood/40"
-      >
-        <p className="text-[11px] uppercase tracking-widest font-semibold">Scroll to explore</p>
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
-          className="text-base"
-        >
-          ↓
-        </motion.span>
-      </motion.div>
     </section>
   );
 }

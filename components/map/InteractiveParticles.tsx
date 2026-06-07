@@ -21,8 +21,11 @@ export default function InteractiveParticles() {
 
   useEffect(() => {
     setMounted(true);
-    // Generate 150 subtle particles
-    const generatedParticles = Array.from({ length: 150 }).map((_, i) => ({
+    // Generate fewer particles on mobile to prevent iOS Safari crash
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 30 : 150;
+    
+    const generatedParticles = Array.from({ length: particleCount }).map((_, i) => ({
       id: i,
       x: Math.random() * 100, // percentage for width
       y: Math.random() * 100, // percentage for height

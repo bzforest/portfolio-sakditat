@@ -17,23 +17,28 @@ export default function ProjectMap({ projects }: ProjectMapProps) {
       <div className="max-w-7xl mx-auto px-4 relative z-10 space-y-16 md:space-y-24">
         {/* Section Header */}
         <div className="text-center space-y-4">
-          <p className="font-heading font-extrabold text-2xl md:text-5xl text-ro-wood drop-shadow-sm dark:text-slate-200">
-            <motion.span
-              animate={{ rotateY: 360 }}
-              transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
-              className="inline-block"
-            >
-              ✦
-            </motion.span>
-            {' '}Adventurer's Quests{' '}
-            <motion.span
-              animate={{ rotateY: 360 }}
-              transition={{ repeat: Infinity, duration: 2, ease: 'linear', delay: 1 }}
-              className="inline-block"
-            >
-              ✦
-            </motion.span>
-          </p>
+          <div className="font-heading font-extrabold text-2xl md:text-5xl text-ro-wood drop-shadow-sm dark:text-slate-200 flex flex-col items-center">
+            <div className="flex items-center gap-2 md:gap-4">
+              <motion.span
+                animate={{ rotateY: 360 }}
+                transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
+                className="inline-block"
+              >
+                ✦
+              </motion.span>
+              <span>Adventurer's Quests</span>
+              <motion.span
+                animate={{ rotateY: 360 }}
+                transition={{ repeat: Infinity, duration: 2, ease: 'linear', delay: 1 }}
+                className="inline-block"
+              >
+                ✦
+              </motion.span>
+            </div>
+            <span className="text-xl md:text-4xl text-ro-wood/80 dark:text-slate-50 mt-1 md:mt-2">
+              ( Projects )
+            </span>
+          </div>
         </div>
 
         {/* Project Cards Map */}
@@ -52,29 +57,29 @@ export default function ProjectMap({ projects }: ProjectMapProps) {
               projects.map((project, index) => {
                 const isEven = index % 2 === 0;
                 return (
-                <motion.div
-                  key={project.title}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-100px' }}
-                  transition={{ duration: 0.6, ease: 'easeOut' }}
-                  className={`relative flex flex-col lg:flex-row items-center w-full lg:py-12 ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                    }`}
-                >
-                  {/* ── Timeline Node (Dot) ──────────────────────── */}
-                  <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-amber-400 border-4 border-amber-100 dark:border-slate-800 shadow-[0_0_15px_rgba(250,204,21,0.8)] z-20" />
+                  <motion.div
+                    key={project.title}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    className={`relative flex flex-col lg:flex-row items-center w-full lg:py-12 ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                      }`}
+                  >
+                    {/* ── Timeline Node (Dot) ──────────────────────── */}
+                    <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-amber-400 border-4 border-amber-100 dark:border-slate-800 shadow-[0_0_15px_rgba(250,204,21,0.8)] z-20" />
 
-                  {/* ── Project Card Container ──────────────────── */}
-                  <div className={`w-full lg:w-1/2 ${isEven ? 'lg:pr-16' : 'lg:pl-16'}`}>
-                    <ProjectCard project={project} index={index} />
-                  </div>
+                    {/* ── Project Card Container ──────────────────── */}
+                    <div className={`w-full lg:w-1/2 ${isEven ? 'lg:pr-16' : 'lg:pl-16'}`}>
+                      <ProjectCard project={project} index={index} />
+                    </div>
 
-                  {/* ── Empty Space for Alignment ───────────────── */}
-                  <div className="hidden lg:block w-1/2" />
-                </motion.div>
-              );
-            })
-          )}
+                    {/* ── Empty Space for Alignment ───────────────── */}
+                    <div className="hidden lg:block w-1/2" />
+                  </motion.div>
+                );
+              })
+            )}
           </div>
         </div>
 

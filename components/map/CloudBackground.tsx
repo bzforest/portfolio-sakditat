@@ -84,8 +84,11 @@ export default function CloudBackground() {
 
   useEffect(() => {
     setMounted(true);
-    // Generate 15 clouds for a balanced density
-    const generatedClouds = Array.from({ length: 15 }).map((_, i) => ({
+    // Generate fewer clouds on mobile to prevent iOS Safari crash
+    const isMobile = window.innerWidth < 768;
+    const cloudCount = isMobile ? 10 : 15;
+    
+    const generatedClouds = Array.from({ length: cloudCount }).map((_, i) => ({
       id: i,
       x: Math.random() * 100, // 0-100% width
       y: Math.random() * 100, // 0-100% document height
